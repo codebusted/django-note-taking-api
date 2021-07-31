@@ -1,7 +1,14 @@
 from django.shortcuts import redirect, render
 
 # Create your views here.
+from rest_framework import viewsets
+
+from .serializers import NotesSerializer
 from .models import Notes
+
+class NotesViewSet(viewsets.ModelViewSet):
+	queryset = Notes.objects.all().order_by('title')
+	serializer_class = NotesSerializer
 
 def editor(request):
 	id = int(request.GET.get('id', 0))
